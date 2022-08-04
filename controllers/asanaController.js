@@ -3,24 +3,24 @@ const User = require('../models/user');
 const {createWriteStream} = require('fs');
 const awsUploadImage = require('../utils/aws-upload-image');
 
-// const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 //TODO: Logica pujar imatge
 
-async function newAsana(input, ctx) {
-    const {nombre, descripcion, beneficios, file} = input;
-    // const {createReadStream, mimetype} = await file;
-    // const extension = mimetype.split('/')[1];
-    // const fileName = `nueva-asana/${uuidv4()}.${extension}`;
-    // const fileData = createReadStream();
+async function newAsana(input, file, ctx) {
+    const {nombre, descripcion, beneficios} = input;
+    const {createReadStream, mimetype} = await file;
+    const extension = mimetype.split('/')[1];
+    const fileName = `nueva-asana/${uuidv4()}.${extension}`;
+    const fileData = createReadStream();
     try {
-        // const result = await awsUploadImage(fileData, fileName);
+        const result = await awsUploadImage(fileData, fileName);
         const asanaNew = new Asana({
             idUser: ctx.user.id,
             nombre,
             descripcion,
             beneficios,
-            // file: result,
-            // typeFile: mimetype.split('/')[0],
+            file: result,
+            typeFile: mimetype.split('/')[0],
             createAt: Date.now()
         });
         asanaNew.save();
@@ -60,7 +60,7 @@ async function uploadImage(file, ctx) {
     const {username, id} = ctx.user;
     const {createReadStream, mimetype} = await file;
     const extension = mimetype.split("/")[1];
-    const imageName = `nueva-asana/${username}.${extension}`;
+    const imageName = `avatar/${username}.${extension}`;
     const fileData = await createReadStream();
 
     try {

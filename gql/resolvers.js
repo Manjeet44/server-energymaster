@@ -17,7 +17,7 @@ const resolvers = {
         login: (_, {input}) => loginUser(input),
 
         //Asana
-        newAsana: (_, {input}, ctx) => newAsana(input, ctx),
+        newAsana: (_, {input, file}, ctx) => newAsana(input, file, ctx),
         uploadImage: (_, {file}, ctx) => uploadImage(file, ctx)
         
     }

@@ -31,7 +31,7 @@ const typeDefs = gql`
         token: String
     }
 
-    type ImagenAsana {
+    type ImagenAvatar {
         status: Boolean
         urlImagen: String
     }
@@ -49,13 +49,14 @@ const typeDefs = gql`
 
     input LoginInput {
         email: String!
-        password: String!
+        password: String! 
     }
 
     input AsanaInput {
         nombre: String!
         descripcion: String!
         beneficios: String!
+        file: String
         typeFile: String
     }
 
@@ -73,8 +74,8 @@ const typeDefs = gql`
         login(input: LoginInput): Token
 
         # Asana
-        newAsana(input: AsanaInput): Asana
-        uploadImage(file: Upload): ImagenAsana
+        newAsana(input: AsanaInput, file: Upload): Asana
+        uploadImage(file: Upload): ImagenAvatar
     }
 
 `;
