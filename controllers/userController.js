@@ -62,8 +62,30 @@ async function loginUser(input) {
 
 }
 
+async function updateUser(input, ctx) {
+    const {id} = ctx.user;
+    try {
+        if(input.currentPassword && input.newPassword) {
+            //Cambiar Password
+            const userFound = await User.findById(id);
+            const passwordSucces = await bcryptjs.compare(input.currentPassword, userFound.password);
+            if(!passwordSucces) throw new Error('Datos incorrectos');
+            const salt = await bcryptjs.genSaltSync(10);
+            const newPasswordCrypt = await bcryptjs.hash(input.newPassword, salt);
+            await User.findByIdAndUpdate(id, {password: newPasswordCrypt})
+        } else {
+            await User.findByIdAndUpdate(id, input);
+        }
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
 module.exports = {
     userRegister,
     getUser,
-    loginUser
+    loginUser,
+    updateUser
 }

@@ -36,12 +36,13 @@ const UsuarioSchema = mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    tokenId: {
-        type: String
+    siteWeb: {
+        type: String,
+        trim: true
     },
-    confirmado: {
-        type: Boolean,
-        default: false
+    description: {
+        type: String,
+        trim: true
     }
 });
 

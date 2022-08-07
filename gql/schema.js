@@ -11,8 +11,9 @@ const typeDefs = gql`
         email: String
         password: String
         avatar: String
+        description: String
+        siteWeb: String
         createAt: String
-        confirmado: Boolean
     }
 
     type Asana {
@@ -60,22 +61,41 @@ const typeDefs = gql`
         typeFile: String
     }
 
+    input UserUpdateInput {
+        name: String
+        email: String
+        currentPassword: String
+        newPassword: String
+        siteWeb: String
+        description: String
+    }
+
     type Query {
         #User
         getUser(id: ID, username: String): User
 
         #Asana
         getAsanas(username: String): [Asana]
+
+        # Follow
+        isFollow(username: String!): Boolean
+        getFollowers(username: String!): [User]
+        getFolloweds(username: String!): [User]
     }
 
     type Mutation {
         #User
         register(input: userInput): User
         login(input: LoginInput): Token
+        updateUser(input: UserUpdateInput): Boolean
 
         # Asana
         newAsana(input: AsanaInput, file: Upload): Asana
         uploadImage(file: Upload): ImagenAvatar
+
+        # Folows
+        followUser(username: String!) : Boolean
+        unFollow(username: String!): Boolean
     }
 
 `;
