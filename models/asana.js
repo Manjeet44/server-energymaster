@@ -8,17 +8,17 @@ const AsanaSchema = mongoose.Schema({
     },
     nombre: {
         type: String,
-        required: true,
+        require: true,
         trim: true
     },
     descripcion: {
         type: String,
-        required: true,
+        require: true,
         trim: true
     },
     beneficios: {
         type: String,
-        required: true,
+        require: true,
         trim: true
     },
     file: {
