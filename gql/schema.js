@@ -76,6 +76,7 @@ const typeDefs = gql`
 
         #Asana
         getAsanas(username: String): [Asana]
+        getAsana(id: ID!): Asana
 
         # Follow
         isFollow(username: String!): Boolean
@@ -96,6 +97,10 @@ const typeDefs = gql`
         # Folows
         followUser(username: String!) : Boolean
         unFollow(username: String!): Boolean
+
+         # Likes
+        addLike(idAsana: ID!) : Boolean
+        deleteLike(idAsana: ID!): Boolean
     }
 
 `;

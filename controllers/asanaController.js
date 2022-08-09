@@ -81,8 +81,15 @@ async function uploadImage(file, ctx) {
 
 }
 
+async function getAsana(id, ctx) {
+    const asana = await Asana.findById(id);
+    if(!asana) throw new Error('Esta Asana no existe');
+    return asana;
+}
+
 module.exports = {
     newAsana,
     getAsanas,
-    uploadImage
+    uploadImage,
+    getAsana
 }
