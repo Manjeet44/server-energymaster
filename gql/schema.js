@@ -37,6 +37,13 @@ const typeDefs = gql`
         urlImagen: String
     }
 
+    type Comment {
+        idAsana: ID
+        idUser: User
+        comment: String
+        createAt: String
+    }
+
 
     # Inputs
 
@@ -70,6 +77,11 @@ const typeDefs = gql`
         description: String
     }
 
+    input CommentInput {
+        idAsana: ID
+        comment: String
+    }
+
     type Query {
         #User
         getUser(id: ID, username: String): User
@@ -82,6 +94,13 @@ const typeDefs = gql`
         isFollow(username: String!): Boolean
         getFollowers(username: String!): [User]
         getFolloweds(username: String!): [User]
+
+        # Like
+        isLike(idAsana: ID!): Boolean
+        countLikes(idAsana: ID!): Int
+
+        # Comment
+        getComments(idAsana: ID!): [Comment]
     }
 
     type Mutation {
@@ -101,6 +120,9 @@ const typeDefs = gql`
          # Likes
         addLike(idAsana: ID!) : Boolean
         deleteLike(idAsana: ID!): Boolean
+
+        # Comment
+        addComment(input: CommentInput): Comment
     }
 
 `;

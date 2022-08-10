@@ -1,7 +1,8 @@
 const {userRegister, getUser, loginUser, updateUser} = require('../controllers/userController');
 const {newAsana, getAsanas, uploadImage, getAsana} = require('../controllers/asanaController');
 const {followUser, unFollow, isFollow, getUserFollowers, getUserFolloweds} = require('../controllers/followController');
-const {addLike, deleteLike} = require('../controllers/likesController');
+const {addLike, deleteLike, isLike, countLikes} = require('../controllers/likesController');
+const {addNewComment, getPubliComments} = require('../controllers/commentController');
 const GraphQLUpload = require('graphql-upload/GraphQLUpload.js');
 
 const resolvers = {
@@ -18,6 +19,13 @@ const resolvers = {
         isFollow: (_, {username}, ctx) => isFollow(username, ctx),
         getFollowers: (_, {username}) => getUserFollowers(username),
         getFolloweds: (_, {username}) => getUserFolloweds(username),
+
+        // Like
+        isLike: (_, {idAsana}, ctx) => isLike(idAsana, ctx),
+        countLikes: (_, {idAsana}) => countLikes(idAsana),
+
+        //Comment
+        getComments: (_, {idAsana}) => getPubliComments(idAsana),
     },
     Mutation: {
         //User
@@ -35,7 +43,10 @@ const resolvers = {
         
         // Likes
         addLike: (_, {idAsana}, ctx) => addLike(idAsana, ctx),
-        deleteLike: (_, {idAsana}, ctx) => deleteLike(idAsana, ctx)
+        deleteLike: (_, {idAsana}, ctx) => deleteLike(idAsana, ctx),
+
+        //Comment
+        addComment: (_, {input}, ctx) => addNewComment(input, ctx),
     }
 }
 module.exports = resolvers;

@@ -24,7 +24,29 @@ function addLike(idAsana, ctx) {
     }
 }
 
+async function isLike(idAsana, ctx) {
+    try {
+        const result = await Like.findOne({idAsana}).where({idUser: ctx.user.id});
+        if(!result) throw new Error('No le ha dado a like');
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
+async function countLikes(idAsana) {
+    try {
+        const result = await Like.countDocuments({idAsana});
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     addLike,
-    deleteLike
+    deleteLike,
+    isLike, 
+    countLikes
 }
