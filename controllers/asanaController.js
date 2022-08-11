@@ -1,5 +1,7 @@
 const Asana = require('../models/asana');
 const User = require('../models/user');
+const Follow = require('../models/follow');
+const Like = require('../models/likes');
 const {createWriteStream} = require('fs');
 const awsUploadImage = require('../utils/aws-upload-image');
 
@@ -87,9 +89,48 @@ async function getAsana(id, ctx) {
     return asana;
 }
 
+async function getAsanaFolloweds(ctx) {
+    //Obtener todos los usuarios al que sigue el usuario ctx
+    const followeds = await Follow.find({idUser: ctx.user.id}).populate('follow');
+    const followedsList = [];
+    
+    for await (const data of followeds) {
+        followedsList.push(data.follow);
+    }
+
+    const asanaList = [];
+    for await ( const data of followedsList) {
+        const asanas = await Asana.find().where({
+            idUser: data._id
+        }).sort({createAt: -1}).populate('idUser').limit(8)
+        
+        asanaList.push(...asanas); //Si feim una copia amb spreatOperator farem una copia des constingut de dins s'array, es a dir esobjectes que te. Si no feim sa copia ens faria una copia de s'array amb es objectes dins
+    }
+    const result = asanaList.sort((a, b)=> {
+        return new Date(b.createAt) - new Date(a.createAt)
+    });
+    return result;
+}
+
+async function getAsanaByLike(ctx) {
+    //Obtener todos los usuarios al que sigue el usuario ctx
+    const liked = await Like.find({idUser: ctx.user.id}).populate('idAsana');
+    const likedList = [];
+    
+    for await (const data of liked) {
+        likedList.push(data.idAsana);
+    }
+
+    return likedList;
+
+}
+
+
 module.exports = {
     newAsana,
     getAsanas,
     uploadImage,
-    getAsana
+    getAsana,
+    getAsanaFolloweds,
+    getAsanaByLike
 }

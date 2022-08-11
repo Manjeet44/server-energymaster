@@ -44,6 +44,18 @@ const typeDefs = gql`
         createAt: String
     }
 
+    type FeedAsana {
+        id: ID
+        idUser: User
+        file: String
+        typeFile: String
+        nombre: String
+        descripcion: String
+        beneficios: String
+        frase: String
+        createAt: String
+    }
+
 
     # Inputs
 
@@ -85,10 +97,13 @@ const typeDefs = gql`
     type Query {
         #User
         getUser(id: ID, username: String): User
+        search(search: String): [User]
 
         #Asana
         getAsanas(username: String): [Asana]
         getAsana(id: ID!): Asana
+        getAsanaFolloweds: [FeedAsana]
+        getAsanaByLike: [FeedAsana]
 
         # Follow
         isFollow(username: String!): Boolean

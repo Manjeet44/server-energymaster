@@ -83,9 +83,17 @@ async function updateUser(input, ctx) {
     }
 }
 
+async function busqueda(search) {
+    const users = await User.find({
+        nombre: {$regex: search, $options: 'i'}
+    });
+    return users;
+}
+
 module.exports = {
     userRegister,
     getUser,
     loginUser,
-    updateUser
+    updateUser,
+    busqueda
 }
