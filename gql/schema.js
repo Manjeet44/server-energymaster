@@ -80,6 +80,14 @@ const typeDefs = gql`
         typeFile: String
     }
 
+    input AsanaUpdate {
+        nombre: String
+        descripcion: String
+        beneficios: String
+        file: String
+        typeFile: String
+    }
+
     input UserUpdateInput {
         name: String
         email: String
@@ -127,6 +135,8 @@ const typeDefs = gql`
         # Asana
         newAsana(input: AsanaInput, file: Upload): Asana
         uploadImage(file: Upload): ImagenAvatar
+        deleteAsana(idAsana: ID!): Boolean
+        editarAsana(idAsana: ID!, input: AsanaUpdate): Asana
 
         # Folows
         followUser(username: String!) : Boolean

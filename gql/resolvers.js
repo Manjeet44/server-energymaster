@@ -1,5 +1,5 @@
 const {userRegister, getUser, loginUser, updateUser, busqueda} = require('../controllers/userController');
-const {newAsana, getAsanas, uploadImage, getAsana, getAsanaFolloweds, getAsanaByLike} = require('../controllers/asanaController');
+const {newAsana, getAsanas, uploadImage, getAsana, getAsanaFolloweds, getAsanaByLike, deleteAsana, editarAsana} = require('../controllers/asanaController');
 const {followUser, unFollow, isFollow, getUserFollowers, getUserFolloweds} = require('../controllers/followController');
 const {addLike, deleteLike, isLike, countLikes} = require('../controllers/likesController');
 const {addNewComment, getPubliComments} = require('../controllers/commentController');
@@ -39,6 +39,8 @@ const resolvers = {
         //Asana
         newAsana: (_, {input, file}, ctx) => newAsana(input, file, ctx),
         uploadImage: (_, {file}, ctx) => uploadImage(file, ctx),
+        deleteAsana: (_,{idAsana}, ctx) => deleteAsana(idAsana, ctx),
+        editarAsana: (_, {idAsana, input}, ctx) => editarAsana(idAsana, input, ctx),
 
         //Follow
         followUser: (_, {username}, ctx) => followUser(username, ctx),

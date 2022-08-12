@@ -125,6 +125,24 @@ async function getAsanaByLike(ctx) {
 
 }
 
+async function deleteAsana(idAsana, ctx) {
+    try {
+        const deleteAsana = await Asana.findOneAndDelete({_id: idAsana}).where({idUser: ctx.user.id});
+        if(!deleteAsana) throw new Error('Hubo un Error');
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
+async function editarAsana(idAsana, input, ctx) {
+    const updateAsana = await Asana.findOneAndUpdate({_id: idAsana}, input, {new: true}).where({idUser: ctx.user.id});
+    if(!updateAsana) throw new Error('No se pudo actualizar');
+    return updateAsana;
+
+}
+
 
 module.exports = {
     newAsana,
@@ -132,5 +150,7 @@ module.exports = {
     uploadImage,
     getAsana,
     getAsanaFolloweds,
-    getAsanaByLike
+    getAsanaByLike,
+    deleteAsana,
+    editarAsana
 }
