@@ -137,10 +137,9 @@ async function deleteAsana(idAsana, ctx) {
 }
 
 async function editarAsana(idAsana, input, ctx) {
-    const updateAsana = await Asana.findOneAndUpdate({_id: idAsana}, input, {new: true}).where({idUser: ctx.user.id});
+    const updateAsana = await Asana.findByIdAndUpdate({_id: idAsana}, input, {new: true});
     if(!updateAsana) throw new Error('No se pudo actualizar');
     return updateAsana;
-
 }
 
 
