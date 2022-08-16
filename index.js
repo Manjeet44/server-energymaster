@@ -6,6 +6,7 @@ const express = require('express');
 const graphqlUploadExpress = require('graphql-upload/graphqlUploadExpress.js');
 const typeDefs = require('./gql/schema');
 const resolvers = require('./gql/resolvers');
+const cors = require('cors');
 require('dotenv').config({path: '.env'});
 
 mongoose.connect(process.env.BBDD, {
@@ -49,7 +50,8 @@ async function server() {
     };
     const app = express();
     app.use(graphqlUploadExpress());
-    serverApollo.applyMiddleware({app, cors: corsOptions});
+    app.use(cors());
+    serverApollo.applyMiddleware({app});
     await new Promise((r) => app.listen({port: process.env.PORT || 4000}, r));
     console.log('################');
     console.log(`Server Ready at http://localhost:${process.env.PORT}${serverApollo.graphqlPath}`);
