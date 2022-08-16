@@ -54,6 +54,6 @@ async function server() {
     serverApollo.applyMiddleware({app});
     await new Promise((r) => app.listen({port: process.env.PORT || 4000}, r));
     console.log('################');
-    console.log(`Server Ready at http://localhost:4000${serverApollo.graphqlPath}`);
+    console.log(`Server Ready at http://localhost:${port}${serverApollo.graphqlPath}`);
     console.log('################');
 }
