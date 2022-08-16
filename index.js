@@ -49,7 +49,7 @@ async function server() {
     };
     const app = express();
     app.use(graphqlUploadExpress());
-    serverApollo.applyMiddleware({app, cors: corsOptions, path: "/graphql"});
+    serverApollo.applyMiddleware({app, cors: corsOptions});
     await new Promise((r) => app.listen({port: process.env.PORT || 4000}, r));
     console.log('################');
     console.log(`Server Ready at http://localhost:${process.env.PORT}${serverApollo.graphqlPath}`);
