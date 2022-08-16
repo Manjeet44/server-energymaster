@@ -24,6 +24,10 @@ async function server() {
     const serverApollo = new ApolloServer({
         typeDefs,
         resolvers,
+        cache: "bounded",
+        cors: {
+        origin: "http://localhost:3000",
+        },
         context: ({req}) => {
             const token = req.headers.authorization;
             if(token) {
@@ -45,11 +49,8 @@ async function server() {
     });
     await serverApollo.start();
     const app = express();
-    const corsOptions = {
-        origin: ["https://andreu-redsocial-yoga.herokuapp.com/"]
-    };
     app.use(graphqlUploadExpress());
-    serverApollo.applyMiddleware({app, cors: corsOptions});
+    serverApollo.applyMiddleware({app});
     await new Promise((r) => app.listen({port: process.env.PORT || 4000}, r));
     console.log('################');
     console.log(`Server Ready at http://localhost:${process.env.PORT}${serverApollo.graphqlPath}`);
