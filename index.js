@@ -45,8 +45,11 @@ async function server() {
     });
     await serverApollo.start();
     const app = express();
+    const corsOptions = {
+        origin: ["https://andreu-redsocial-yoga.herokuapp.com/"]
+    };
     app.use(graphqlUploadExpress());
-    serverApollo.applyMiddleware({app});
+    serverApollo.applyMiddleware({app, cors: corsOptions});
     await new Promise((r) => app.listen({port: process.env.PORT || 4000}, r));
     console.log('################');
     console.log(`Server Ready at http://localhost:${process.env.PORT}${serverApollo.graphqlPath}`);
