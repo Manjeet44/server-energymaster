@@ -18,17 +18,12 @@ mongoose.connect(process.env.BBDD, {
         server();
     }
 });
-const { ApolloServerPluginLandingPageGraphQLPlayground } = require('apollo-server-core');
+
 
 async function server() {
     const serverApollo = new ApolloServer({
         typeDefs,
         resolvers,
-        plugins: [
-            ApolloServerPluginLandingPageGraphQLPlayground({
-              // options
-            })
-        ],
         context: ({req}) => {
             const token = req.headers.authorization;
             if(token) {
