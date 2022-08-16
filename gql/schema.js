@@ -117,6 +117,7 @@ const typeDefs = gql`
         isFollow(username: String!): Boolean
         getFollowers(username: String!): [User]
         getFolloweds(username: String!): [User]
+        getNotFolloweds: [User]
 
         # Like
         isLike(idAsana: ID!): Boolean

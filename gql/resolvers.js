@@ -1,6 +1,6 @@
 const {userRegister, getUser, loginUser, updateUser, busqueda} = require('../controllers/userController');
 const {newAsana, getAsanas, uploadImage, getAsana, getAsanaFolloweds, getAsanaByLike, deleteAsana, editarAsana} = require('../controllers/asanaController');
-const {followUser, unFollow, isFollow, getUserFollowers, getUserFolloweds} = require('../controllers/followController');
+const {followUser, unFollow, isFollow, getUserFollowers, getUserFolloweds, getNotFolloweds} = require('../controllers/followController');
 const {addLike, deleteLike, isLike, countLikes} = require('../controllers/likesController');
 const {addNewComment, getPubliComments} = require('../controllers/commentController');
 const GraphQLUpload = require('graphql-upload/GraphQLUpload.js');
@@ -22,6 +22,7 @@ const resolvers = {
         isFollow: (_, {username}, ctx) => isFollow(username, ctx),
         getFollowers: (_, {username}) => getUserFollowers(username),
         getFolloweds: (_, {username}) => getUserFolloweds(username),
+        getNotFolloweds: (_,{}, ctx) => getNotFolloweds(ctx),
 
         // Like
         isLike: (_, {idAsana}, ctx) => isLike(idAsana, ctx),
