@@ -26,7 +26,7 @@ async function server() {
         resolvers,
         cache: "bounded",
         cors: {
-        origin: "http://localhost:3000",
+            origin: [""]
         },
         context: ({req}) => {
             const token = req.headers.authorization;
@@ -48,9 +48,12 @@ async function server() {
         }
     });
     await serverApollo.start();
+    const corsOptions = {
+        origin: ["http://localhost:3000", "https://andreu-redsocial-yoga.herokuapp.com/"]
+    };
     const app = express();
     app.use(graphqlUploadExpress());
-    serverApollo.applyMiddleware({app});
+    serverApollo.applyMiddleware({app, cors: corsOptions, path: "/graphql",});
     await new Promise((r) => app.listen({port: process.env.PORT || 4000}, r));
     console.log('################');
     console.log(`Server Ready at http://localhost:${process.env.PORT}${serverApollo.graphqlPath}`);
