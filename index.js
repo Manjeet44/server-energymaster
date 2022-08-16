@@ -22,6 +22,10 @@ mongoose.connect(process.env.BBDD, {
 
 async function server() {
     const serverApollo = new ApolloServer({
+        cors: {
+            origin: '*',
+            credentials: true
+        },
         typeDefs,
         resolvers,
         context: ({req}) => {
