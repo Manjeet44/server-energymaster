@@ -46,11 +46,12 @@ async function server() {
     });
     await serverApollo.start();
     const corsOptions = {
-        origin: ["https://endearing-marzipan-d5ef1c.netlify.app/", "https://andreu-redsocial-yoga.herokuapp.com/"]
-    };
+        origin: 'https://endearing-marzipan-d5ef1c.netlify.app/',
+        credentials: true
+    }
     const app = express();
+    app.use(cors(corsOptions));
     app.use(graphqlUploadExpress());
-    app.use(cors());
     serverApollo.applyMiddleware({app});
     await new Promise((r) => app.listen({port: process.env.PORT || 4000}, r));
     console.log('################');
