@@ -24,10 +24,6 @@ async function server() {
     const serverApollo = new ApolloServer({
         typeDefs,
         resolvers,
-        cache: "bounded",
-        cors: {
-            origin: [""]
-        },
         context: ({req}) => {
             const token = req.headers.authorization;
             if(token) {
