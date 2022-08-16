@@ -44,9 +44,33 @@ async function server() {
         }
     });
     await serverApollo.start();
-    const app = express();
-    app.use(graphqlUploadExpress());
-    serverApollo.applyMiddleware({app, cors: false});
+    // const app = express();
+    // app.use(graphqlUploadExpress());
+    // serverApollo.applyMiddleware({app, cors: false});
+    const app = express(); // This is important!
+  app.use(graphqlUploadExpress()); // This is important!
+  WebApp.connectHandlers.use('/graphql', app); // This is important!
+
+  WebApp.connectHandlers.use("/graphql", (req, res, next) => {
+    
+    if (req.method === "GET") {
+      console.log('Test!!!!!!');
+      res.end()
+    }    
+    if(req.method ==="POST") {
+      console.log('@@@@')
+      console.log(`req: ${JSON.stringify(req.body) }`);
+    }
+    next();
+
+  });
+  server.applyMiddleware({
+    app,
+    cors: true,
+    path: '/graphql',
+  });
+
+
     await new Promise((r) => app.listen({port: process.env.PORT || 4000}, r));
     console.log('################');
     console.log(`Server Ready at http://localhost:${process.env.PORT}${serverApollo.graphqlPath}`);
