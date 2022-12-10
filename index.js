@@ -48,12 +48,6 @@ async function server() {
             }
         }
     });
-    exports.handler = server.createHandler({
-        cors: {
-            origin: '*',
-            credentials: true
-            }
-    });
     await serverApollo.start();
     const app = express();
     app.use(graphqlUploadExpress());
