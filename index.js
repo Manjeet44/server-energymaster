@@ -27,7 +27,6 @@ async function server() {
             credentials: true
         },
         cache: "bounded",
-        csrfPrevention: true,
         typeDefs,
         resolvers,
         context: ({req}) => {
@@ -48,6 +47,12 @@ async function server() {
                 }
             }
         }
+    });
+    exports.handler = server.createHandler({
+        cors: {
+            origin: '*',
+            credentials: true
+            }
     });
     await serverApollo.start();
     const app = express();
