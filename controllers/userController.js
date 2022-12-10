@@ -57,7 +57,7 @@ async function loginUser(input) {
     if(!passwordSucces) throw new Error('Error en el email o password');
 
     return {
-        token: crearToken(existeEmail, process.env.SECRET_KEY, "400h")
+        token: crearToken(existeEmail, process.env.SECRET_KEY, "365d")
     }
 
 }
