@@ -26,6 +26,7 @@ async function server() {
             origin: '*',
             credentials: true
         },
+        persistedQueries: false,
         typeDefs,
         resolvers,
         context: ({req}) => {
